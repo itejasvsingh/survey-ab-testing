@@ -80,9 +80,15 @@ legend{font-size:14px;font-weight:700;margin-bottom:10px;padding:0; width: 100%;
 .opt{display:flex;gap:10px;margin:8px 0;font-size:14px; align-items: center;}
 .opt label{cursor:pointer; flex: 1;}
 .opt input[type="radio"] { accent-color: var(--brand); transform: scale(1.2); }
-textarea,input[type=text]{width:100%;border:1px solid #ded5e4;border-radius:10px;padding:12px;font:inherit;font-size:14px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
-textarea:focus, input[type=text]:focus { outline: 2px solid var(--brand); border-color: transparent; }
-textarea{min-height:70px;resize:vertical}
+input[type=text]{width:100%;border:1px solid #ded5e4;border-radius:10px;padding:12px;font:inherit;font-size:14px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+input[type=text]:focus { outline: 2px solid var(--brand); border-color: transparent; }
+
+/* Clickable Tags Grid */
+.tags-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px; }
+.tag-btn { background: #fff; border: 1px solid #ded5e4; border-radius: 8px; padding: 10px 12px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; text-align: left; transition: all 0.2s; }
+.tag-btn:hover { border-color: var(--brand); color: var(--brand); }
+.tag-btn.sel { background: #f5e8f5; border-color: var(--brand); color: var(--brand); box-shadow: 0 2px 6px rgba(102,0,102,0.15); }
+
 .scale{display:flex;gap:8px;margin-top:6px}
 .scale button{flex:1;border:1px solid #ded5e4;background:#fff;border-radius:8px;padding:10px 0;cursor:pointer;font-size:14px; font-weight: 700; color: var(--muted); transition: all 0.2s;}
 .scale button:hover { border-color: var(--brand); color: var(--brand); }
@@ -95,7 +101,7 @@ textarea{min-height:70px;resize:vertical}
 
 <header>
   <h1>Caterworld Usability A/B Testing</h1>
-  <p>Scroll through the 3 tests below. Interact with both versions of each screen, and answer the specific questions below each test. Click submit at the very bottom when finished.</p>
+  <p>Scroll through the 3 tests below. Interact with both versions of each screen, and answer the quick options below each test. Click submit at the very bottom when finished.</p>
 </header>
 
 <form id="fbform">
@@ -113,7 +119,7 @@ textarea{min-height:70px;resize:vertical}
         <div class="phone">
           <div class="appbar">
             <div class="appbar-text">CW-001<span>Menus &amp; quotations</span></div>
-            <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+            <img src="https://www.caterworld.ai/assets/caterWorldBlack-ju8yNGfX.png" alt="Caterworld" class="logo-appbar">
           </div>
           <div class="screen">
             <div class="card"><h3 style="margin-bottom:8px">Office Lunch Program</h3><p>👥 100 pax · 📅 20 service days</p><p>💰 Budget: ₹220 / plate, before tax</p></div>
@@ -151,7 +157,7 @@ textarea{min-height:70px;resize:vertical}
         <div class="phone">
           <div class="appbar">
             <div class="appbar-text">CW-001<span>Menus &amp; quotations</span></div>
-            <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+            <img src="https://www.caterworld.ai/assets/caterWorldBlack-ju8yNGfX.png" alt="Caterworld" class="logo-appbar">
           </div>
           <div class="screen">
             <div class="card"><h3 style="margin-bottom:8px">Office Lunch Program</h3><p>👥 100 pax · 📅 20 service days</p><p>💰 Budget: ₹220 / plate, before tax</p></div>
@@ -207,8 +213,14 @@ textarea{min-height:70px;resize:vertical}
         <input type="hidden" id="score1_2" required>
       </fieldset>
       <fieldset style="margin-bottom: 0;">
-        <legend>4. What specific element made you choose this version?</legend>
-        <textarea id="reason1" required placeholder="e.g., The matrix table made the price difference obvious immediately..."></textarea>
+        <legend>4. What drove your choice? (Select main reason)</legend>
+        <div class="tags-grid" id="tags1">
+          <button type="button" class="tag-btn" onclick="setTag(1, 'Faster price comparison')">⚡ Faster price comparison</button>
+          <button type="button" class="tag-btn" onclick="setTag(1, 'Easier to review menus')">📋 Easier to review menus</button>
+          <button type="button" class="tag-btn" onclick="setTag(1, 'Cleaner layout & less clutter')">✨ Cleaner layout & less clutter</button>
+          <button type="button" class="tag-btn" onclick="setTag(1, 'Better decision confidence')">🎯 Better decision confidence</button>
+        </div>
+        <input type="hidden" id="reason1" required>
       </fieldset>
     </div>
   </div>
@@ -227,7 +239,7 @@ textarea{min-height:70px;resize:vertical}
         <div class="phone">
           <div class="appbar">
             <div class="appbar-text">CREATE ORDER<span>Tell us what you need</span></div>
-            <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+            <img src="https://www.caterworld.ai/assets/caterWorldBlack-ju8yNGfX.png" alt="Caterworld" class="logo-appbar">
           </div>
           <div class="screen">
             <label class="field">Order name *</label>
@@ -270,7 +282,7 @@ textarea{min-height:70px;resize:vertical}
         <div class="phone">
           <div class="appbar">
             <div class="appbar-text">CREATE ORDER<span>Tell us what you need</span></div>
-            <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+            <img src="https://www.caterworld.ai/assets/caterWorldBlack-ju8yNGfX.png" alt="Caterworld" class="logo-appbar">
           </div>
           <div class="screen">
             <div class="card" style="padding-top: 5px;">
@@ -343,8 +355,14 @@ textarea{min-height:70px;resize:vertical}
         <input type="hidden" id="score2_2" required>
       </fieldset>
       <fieldset style="margin-bottom: 0;">
-        <legend>4. What specific element made you choose this version?</legend>
-        <textarea id="reason2" required placeholder="e.g., The grouped cards made it easier to scan sections..."></textarea>
+        <legend>4. What drove your choice? (Select main reason)</legend>
+        <div class="tags-grid" id="tags2">
+          <button type="button" class="tag-btn" onclick="setTag(2, 'Less cognitive overload')">🧩 Less cognitive overload</button>
+          <button type="button" class="tag-btn" onclick="setTag(2, 'Better section grouping')">📁 Better section grouping</button>
+          <button type="button" class="tag-btn" onclick="setTag(2, 'Easier to scan fields')">👀 Easier to scan fields</button>
+          <button type="button" class="tag-btn" onclick="setTag(2, 'Feels less like a wall of text')">🧱 Feels less like a wall of text</button>
+        </div>
+        <input type="hidden" id="reason2" required>
       </fieldset>
     </div>
   </div>
@@ -363,7 +381,7 @@ textarea{min-height:70px;resize:vertical}
         <div class="phone">
           <div class="appbar">
             <div class="appbar-text">CW-001<span>Manage your service</span></div>
-            <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+            <img src="https://www.caterworld.ai/assets/caterWorldBlack-ju8yNGfX.png" alt="Caterworld" class="logo-appbar">
           </div>
           <div class="screen">
             <div class="card">
@@ -393,7 +411,7 @@ textarea{min-height:70px;resize:vertical}
         <div class="phone">
           <div class="appbar">
             <div class="appbar-text">CW-001<span>Manage your service</span></div>
-            <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+            <img src="https://www.caterworld.ai/assets/caterWorldBlack-ju8yNGfX.png" alt="Caterworld" class="logo-appbar">
           </div>
           <div class="screen">
             <div class="status-banner">
@@ -452,8 +470,14 @@ textarea{min-height:70px;resize:vertical}
         <input type="hidden" id="score3_2" required>
       </fieldset>
       <fieldset style="margin-bottom: 0;">
-        <legend>4. What specific element made you choose this version?</legend>
-        <textarea id="reason3" required placeholder="e.g., The large colored banner caught my eye immediately..."></textarea>
+        <legend>4. What drove your choice? (Select main reason)</legend>
+        <div class="tags-grid" id="tags3">
+          <button type="button" class="tag-btn" onclick="setTag(3, 'Status banner catches eye instantly')">🚨 Status banner catches eye instantly</button>
+          <button type="button" class="tag-btn" onclick="setTag(3, 'Clear timeline progression')">📈 Clear timeline progression</button>
+          <button type="button" class="tag-btn" onclick="setTag(3, 'Less scrolling to find status')">🔍 Less scrolling to find status</button>
+          <button type="button" class="tag-btn" onclick="setTag(3, 'Better visual hierarchy')">🎨 Better visual hierarchy</button>
+        </div>
+        <input type="hidden" id="reason3" required>
       </fieldset>
     </div>
   </div>
@@ -480,7 +504,6 @@ textarea{min-height:70px;resize:vertical}
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  // Your actual Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyBKf0SY23ETDTNzNAJ7uJyvwyS_rxZzUMs",
     authDomain: "survey-ab-testing.firebaseapp.com",
@@ -509,17 +532,33 @@ textarea{min-height:70px;resize:vertical}
     });
   };
 
+  window.setTag = function(testNum, tagText) {
+    document.getElementById('reason' + testNum).value = tagText;
+    const tagButtons = document.querySelectorAll('#tags' + testNum + ' .tag-btn');
+    tagButtons.forEach(b => {
+        b.classList.toggle('sel', b.textContent.includes(tagText));
+    });
+  };
+
   document.getElementById('fbform').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Check all required custom scale inputs (radio and textarea are handled natively by HTML 'required')
     const scores = ['1_1', '1_2', '2_1', '2_2', '3_1', '3_2'];
+    const reasons = ['reason1', 'reason2', 'reason3'];
     const statusDiv = document.getElementById('status');
     const submitBtn = document.getElementById('submitBtn');
 
     for (let id of scores) {
         if (!document.getElementById('score' + id).value) {
             statusDiv.textContent = 'Please make sure all 1-5 ratings are selected across all three tests before submitting.';
+            statusDiv.style.color = '#a02b2b';
+            return;
+        }
+    }
+
+    for (let id of reasons) {
+        if (!document.getElementById(id).value) {
+            statusDiv.textContent = 'Please select a main reason chip for each test before submitting.';
             statusDiv.style.color = '#a02b2b';
             return;
         }
@@ -534,19 +573,19 @@ textarea{min-height:70px;resize:vertical}
             preference: document.querySelector('input[name="t1_pref"]:checked').value,
             confidenceScore: parseInt(document.getElementById('score1_1').value),
             layoutScore: parseInt(document.getElementById('score1_2').value),
-            reason: document.getElementById('reason1').value.trim()
+            mainReason: document.getElementById('reason1').value
         },
         test2_CreateOrder: {
             preference: document.querySelector('input[name="t2_pref"]:checked').value,
             organizationScore: parseInt(document.getElementById('score2_1').value),
             navigationScore: parseInt(document.getElementById('score2_2').value),
-            reason: document.getElementById('reason2').value.trim()
+            mainReason: document.getElementById('reason2').value
         },
         test3_OrderTracking: {
             preference: document.querySelector('input[name="t3_pref"]:checked').value,
             effectivenessScore: parseInt(document.getElementById('score3_1').value),
             identificationSpeedScore: parseInt(document.getElementById('score3_2').value),
-            reason: document.getElementById('reason3').value.trim()
+            mainReason: document.getElementById('reason3').value
         },
         participantName: document.getElementById('name').value.trim() || 'Anonymous',
         timestamp: serverTimestamp()
@@ -563,6 +602,7 @@ textarea{min-height:70px;resize:vertical}
           document.getElementById('score' + id).value = '';
           document.querySelectorAll('#scale' + id + ' button').forEach(b => b.classList.remove('sel'));
       });
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('sel'));
     } catch(err) {
       console.error("Error adding document: ", err);
       statusDiv.style.color = '#a02b2b';
