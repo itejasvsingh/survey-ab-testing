@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caterworld — Complete A/B Testing Suite</title>
+<style>
+:root{--brand:#660066;--accent:#9a038b;--ink:#251c2d;--muted:#706777;--line:#e9e2ed;--surface:#faf8fc;--bg:#eeebf2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding-bottom: 50px;}
+header{max-width:1000px;margin:0 auto;padding:28px 20px 16px; text-align: center;}
+header h1{font-size:24px;margin:0 0 6px;letter-spacing:-.4px; color: var(--brand);}
+header p{color:var(--muted);font-size:14px;line-height:1.55;margin:6px 0}
+
+.tabs{display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap; padding: 0 20px;}
+.tab{background: #fff; border: 2px solid var(--line); color: var(--muted); padding: 10px 20px; border-radius: 30px; font-weight: 700; font-size: 13.5px; cursor: pointer; transition: all 0.2s;}
+.tab.active{background: var(--brand); border-color: var(--brand); color: #fff; box-shadow: 0 4px 12px rgba(102,0,102,0.2);}
+
+.test-container{display: none; animation: fadeIn 0.3s;}
+.test-container.active{display: block;}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+.task{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:16px auto;max-width:1000px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
+.task b{color:var(--brand)}
+.wrap{max-width:1000px;margin:0 auto;padding:10px 20px 40px;display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
+.col{width:320px}
+.label{text-align:center;font-weight:800;font-size:13px;letter-spacing:1.2px;color:var(--brand);margin-bottom:10px;text-transform:uppercase}
+.phone{width:320px;height:600px;border:8px solid #201c25;border-radius:34px;background:var(--surface);box-shadow:0 18px 40px #28113826;display:flex;flex-direction:column;overflow:hidden; position: relative;}
+.appbar{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:800;font-size:15px;background:#fff;flex-shrink:0; display:flex; justify-content: space-between; align-items: center;}
+.appbar-text span{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
+.logo-appbar{height:20px;max-width:100px;object-fit:contain;}
+.screen{flex:1;overflow:auto;padding:14px 14px 20px; scrollbar-width: none;}
+.screen::-webkit-scrollbar { display: none; }
+
+/* Global UI Elements */
+.card{border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px 14px;margin-bottom:12px; transition: transform 0.2s;}
+button.card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(39,22,52,0.05); cursor: pointer;}
+.card h3{margin:0 0 4px;font-size:15px}
+.card p{margin:3px 0;font-size:12.5px;color:var(--muted)}
+.pill{display:inline-block;font-size:10px;letter-spacing:.4px;text-transform:uppercase;background:#f5e8f5;color:var(--brand);border:1px solid #ead0e8;border-radius:20px;padding:3px 9px;margin-bottom:6px; font-weight: 700;}
+.pill.completed { background: #e6f4ea; color: #137333; border-color: #cce8d6; }
+.line{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid #f0eaf3}
+.line b{font-weight:700}
+.total{font-size:16px;font-weight:800;margin:6px 0 2px}
+.primary{width:100%;background:linear-gradient(180deg,var(--accent),var(--brand));color:#fff;border:0;border-radius:10px;padding:10px;font-weight:700;font-size:13px;margin-top:8px;cursor:pointer}
+.secondary{width:100%;background:#f5e8f5;color:var(--brand);border:0;border-radius:10px;padding:8px;font-weight:700;font-size:12px;margin-top:8px;cursor:pointer}
+details{border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin:8px 0;background:#fdfbfe}
+summary{font-size:12.5px;font-weight:700;color:var(--brand);cursor:pointer}
+details p{white-space:pre-line;font-size:12px;margin:8px 0 2px}
+
+/* Form Elements */
+.field{display:block;font-size:12px;font-weight:bold;margin:12px 0 4px}
+.input-dummy{width:100%;background:white;border:1px solid #ded5e4;border-radius:8px;padding:10px;font-size:13px;color:var(--ink); margin-bottom: 8px;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+/* Specifics for Compare Screen */
+.cmptable{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.cmprow{display:flex;align-items:center;padding:10px 10px;font-size:12px;border-bottom:1px solid var(--line);background:#fff}
+.cmprow>span{display:block;padding-right:6px}
+.cmprow .c-name{width:76px;flex-shrink:0}
+.cmprow .c-price{width:88px;flex-shrink:0}
+.cmprow .c-rating{width:74px;flex-shrink:0}
+.cmprow.head{background:#f5e8f5;color:var(--brand);font-weight:800;font-size:10px;letter-spacing:.3px;text-transform:uppercase}
+.stars{color:var(--brand);font-size:11px;display:block}
+.stars span{display:block;color:var(--muted);font-size:10.5px}
+.chev{background:none;border:0;color:var(--brand);font-size:16px;cursor:pointer;padding:0}
+.expand{padding:2px 12px 12px;background:#fff;border-bottom:1px solid var(--line);font-size:12px}
+.expand.hidden{display:none}
+
+/* Specifics for Tracking Timeline */
+.timeline p{border-left:2px solid #d6dfd4;margin:0;padding:12px 16px;font-size:13px;color:#889288; position: relative;}
+.timeline p::before { content: ''; position: absolute; left: -7px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--line); z-index: 1; transition: all 0.3s ease; }
+.timeline .done{color:var(--brand);font-weight:bold}
+.timeline .done::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px #c948b830; }
+.status-banner {background: linear-gradient(135deg, var(--brand), var(--accent)); color: #fff; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(102,0,102,0.2);}
+.status-banner h3 {margin: 0 0 5px; font-size: 16px; color: #fff;}
+.status-banner p {margin: 0; font-size: 12px; color: #f5e8f5;}
+
+/* Google Form Container */
+.form-container { max-width: 640px; margin: 30px auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Caterworld Usability A/B Testing</h1>
+  <p>Evaluate the 3 critical B2B screens. Select a test below, interact with both versions, and submit your structured feedback to inform data-driven UI improvements.</p>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTest(1)">Test 1: Compare Quotations</button>
+  <button class="tab" onclick="switchTest(2)">Test 2: Create Order Form</button>
+  <button class="tab" onclick="switchTest(3)">Test 3: Order Tracking</button>
+</div>
+
+<!-- ============================================== -->
+<!-- TEST 1: COMPARE CATERERS                       -->
+<!-- ============================================== -->
+<div id="test1" class="test-container active">
+  <div class="task"><b>Scenario:</b> You run your office's lunch program (100 people/day). You received quotes. Your budget is ₹220 per plate. <br><b>Task:</b> Decide which caterer to pick quickly and confidently.</div>
+  <div class="wrap">
+    
+    <!-- T1 Variant A -->
+    <div class="col">
+      <div class="label">Version A — Full Cards</div>
+      <div class="phone">
+        <div class="appbar">
+          <div class="appbar-text">CW-001<span>Menus &amp; quotations</span></div>
+          <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+        </div>
+        <div class="screen">
+          <div class="card"><h3 style="margin-bottom:8px">Office Lunch Program</h3><p>👥 100 pax · 📅 20 service days</p><p>💰 Budget: ₹220 / plate, before tax</p></div>
+          <div class="card">
+            <span class="pill">Proposal received</span>
+            <h3>Sample Kitchen A</h3>
+            <div class="line"><span>Your budget / plate</span><b>₹220</b></div>
+            <div class="line"><span>Quoted / plate, before tax</span><b>₹195</b></div>
+            <p style="color:#2e7d32; font-size:11px; font-weight: 600;">Within your per-plate budget</p>
+            <details><summary>Day 1 menu</summary><p>Phulka, veg pulao, dal, paneer curry, raita, Chicken curry</p></details>
+            <div class="line" style="margin-top:10px;"><span>Meals subtotal</span><b>₹3,90,000</b></div>
+            <div class="line"><span>Illustrative tax · 5%</span><b>₹19,500</b></div>
+            <div class="total">₹4,09,500</div>
+            <button class="primary" onclick="pick('Test 1 - Version A')">Select this quotation</button>
+          </div>
+          <div class="card">
+            <span class="pill">Proposal received</span>
+            <h3>Sample Kitchen B</h3>
+            <div class="line"><span>Your budget / plate</span><b>₹220</b></div>
+            <div class="line"><span>Quoted / plate, before tax</span><b>₹210</b></div>
+            <p style="color:#2e7d32; font-size:11px; font-weight: 600;">Within your per-plate budget</p>
+            <details><summary>Day 1 menu</summary><p>Chapati, rice, sambar, poriyal, curd, Egg curry</p></details>
+            <div class="line" style="margin-top:10px;"><span>Meals subtotal</span><b>₹4,20,000</b></div>
+            <div class="line"><span>Illustrative tax · 5%</span><b>₹21,000</b></div>
+            <div class="total">₹4,41,000</div>
+            <button class="primary" onclick="pick('Test 1 - Version B')">Select this quotation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T1 Variant B -->
+    <div class="col">
+      <div class="label">Version B — Matrix Table</div>
+      <div class="phone">
+        <div class="appbar">
+          <div class="appbar-text">CW-001<span>Menus &amp; quotations</span></div>
+          <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+        </div>
+        <div class="screen">
+          <div class="card"><h3 style="margin-bottom:8px">Office Lunch Program</h3><p>👥 100 pax · 📅 20 service days</p><p>💰 Budget: ₹220 / plate, before tax</p></div>
+          <div class="cmptable">
+            <div class="cmprow head"><span class="c-name">Caterer</span><span class="c-price">Price</span><span class="c-rating">Rating</span><span></span></div>
+            <div class="cmprow"><span class="c-name"><b>Kitchen A</b></span><span class="c-price"><b>₹195</b><span style="color:#2e7d32;font-size:10px;display:block;font-weight:600;">↓₹25 under</span></span><span class="c-rating stars">★★★★★<span>4.8 (32)</span></span><button class="chev" onclick="toggle('detA')">⌄</button></div>
+            <div class="expand hidden" id="detA">
+              <details open><summary>Day 1 menu</summary><p>Phulka, veg pulao, dal, paneer curry, raita, Chicken curry</p></details>
+              <div class="line"><span>Order total (incl. 5% tax)</span><b>₹4,09,500</b></div>
+              <button class="primary" onclick="pick('Test 1 - Version B')">Select this quotation</button>
+            </div>
+            <div class="cmprow"><span class="c-name"><b>Kitchen B</b></span><span class="c-price"><b>₹210</b><span style="color:#2e7d32;font-size:10px;display:block;font-weight:600;">↓₹10 under</span></span><span class="c-rating stars">★★★★☆<span>4.3 (19)</span></span><button class="chev" onclick="toggle('detB')">⌄</button></div>
+            <div class="expand hidden" id="detB">
+              <details open><summary>Day 1 menu</summary><p>Chapati, rice, sambar, poriyal, curd, Egg curry</p></details>
+              <div class="line"><span>Order total (incl. 5% tax)</span><b>₹4,41,000</b></div>
+              <button class="primary" onclick="pick('Test 1 - Version B')">Select this quotation</button>
+            </div>
+          </div>
+          <p style="font-size:11px;color:var(--muted);text-align:center">Tap ⌄ to expand full menu and total.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- TEST 2: CREATE ORDER FORM                      -->
+<!-- ============================================== -->
+<div id="test2" class="test-container">
+  <div class="task"><b>Scenario:</b> You are creating a new catering request for your office. <b>Task:</b> Scroll through the form to input your requirements (Address, Pax, Diet). Which layout feels less overwhelming to complete?</div>
+  <div class="wrap">
+    
+    <!-- T2 Variant A -->
+    <div class="col">
+      <div class="label">Version A — Standard Long Form</div>
+      <div class="phone">
+        <div class="appbar">
+          <div class="appbar-text">CREATE ORDER<span>Tell us what you need</span></div>
+          <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+        </div>
+        <div class="screen">
+          <label class="field">Order name *</label>
+          <div class="input-dummy">Office lunch program</div>
+          
+          <label class="field">Building / office & street address *</label>
+          <div class="input-dummy">Tower A, 3rd floor, 12 OMR Road</div>
+          
+          <div class="row">
+            <div><label class="field">City *</label><div class="input-dummy">Chennai</div></div>
+            <div><label class="field">Pincode *</label><div class="input-dummy">600096</div></div>
+          </div>
+
+          <label class="field">Cooking requirement *</label>
+          <div class="input-dummy">Cook and deliver ▾</div>
+
+          <label class="field">Do you need serving staff? *</label>
+          <div class="input-dummy">Yes ▾</div>
+          <p class="muted" style="margin-top:-5px">Serving means staff to serve food.</p>
+
+          <label class="field">Food preference *</label>
+          <div class="input-dummy">Both ▾</div>
+
+          <div class="row">
+            <div><label class="field">Veg pax *</label><div class="input-dummy">80</div></div>
+            <div><label class="field">Non-veg pax *</label><div class="input-dummy">20</div></div>
+          </div>
+          
+          <label class="field">Budget per plate (₹) *</label>
+          <div class="input-dummy">220</div>
+
+          <button class="primary" onclick="pick('Test 2 - Version A')">Continue to service calendar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- T2 Variant B -->
+    <div class="col">
+      <div class="label">Version B — Grouped Cards</div>
+      <div class="phone">
+        <div class="appbar">
+          <div class="appbar-text">CREATE ORDER<span>Tell us what you need</span></div>
+          <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+        </div>
+        <div class="screen">
+          <div class="card" style="padding-top: 5px;">
+            <label class="field">Order name *</label>
+            <div class="input-dummy" style="margin-bottom:0;">Office lunch program</div>
+          </div>
+
+          <div class="card" style="padding-top: 5px;">
+            <h3 style="margin-top: 10px; color: var(--brand);">📍 Location details</h3>
+            <label class="field">Building / office & street address *</label>
+            <div class="input-dummy">Tower A, 3rd floor, 12 OMR Road</div>
+            <div class="row">
+              <div><label class="field">City *</label><div class="input-dummy" style="margin-bottom:0;">Chennai</div></div>
+              <div><label class="field">Pincode *</label><div class="input-dummy" style="margin-bottom:0;">600096</div></div>
+            </div>
+          </div>
+
+          <div class="card" style="padding-top: 5px;">
+            <h3 style="margin-top: 10px; color: var(--brand);">🍽️ Service & Food</h3>
+            <label class="field">Cooking requirement *</label>
+            <div class="input-dummy">Cook and deliver ▾</div>
+            <label class="field">Serving staff? *</label>
+            <div class="input-dummy">Yes ▾</div>
+            
+            <label class="field">Food preference *</label>
+            <div class="input-dummy">Both ▾</div>
+            <div class="row">
+              <div><label class="field">Veg pax *</label><div class="input-dummy">80</div></div>
+              <div><label class="field">Non-veg pax *</label><div class="input-dummy">20</div></div>
+            </div>
+            
+            <label class="field">Budget per plate (₹) *</label>
+            <div class="input-dummy" style="margin-bottom:0;">220</div>
+          </div>
+
+          <button class="primary" onclick="pick('Test 2 - Version B')">Continue to service calendar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- TEST 3: LIVE ORDER TRACKING                    -->
+<!-- ============================================== -->
+<div id="test3" class="test-container">
+  <div class="task"><b>Scenario:</b> The caterer accepted the order and it is the day of service. <b>Task:</b> Check the app to see if the food is ready. Which UI makes the live status clearer?</div>
+  <div class="wrap">
+    
+    <!-- T3 Variant A -->
+    <div class="col">
+      <div class="label">Version A — Vertical Text List</div>
+      <div class="phone">
+        <div class="appbar">
+          <div class="appbar-text">CW-001<span>Manage your service</span></div>
+          <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+        </div>
+        <div class="screen">
+          <div class="card">
+            <h3>Sample Kitchen A</h3>
+            <p>Lunch · 12:30 · 100 pax</p>
+            <p>Tower A, 3rd floor, 12 OMR Road</p>
+          </div>
+          
+          <label class="field">Scheduled service date</label>
+          <div class="input-dummy" style="margin-bottom: 20px;">Oct 15 · Preparing meal ▾</div>
+          
+          <div class="timeline" style="border-left: 2px solid #e9e2ed;">
+            <p class="done" style="padding: 8px 16px;">✓ Order confirmed</p>
+            <p class="done" style="padding: 8px 16px;">✓ Preparing meal</p>
+            <p style="padding: 8px 16px; color: #a8a8a8;">○ Dispatched</p>
+            <p style="padding: 8px 16px; color: #a8a8a8;">○ Service completed</p>
+          </div>
+          
+          <p class="sub" style="margin-top:25px; margin-left:10px;">Your caterer will update the service status here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- T3 Variant B -->
+    <div class="col">
+      <div class="label">Version B — Highlighted Status Banner</div>
+      <div class="phone">
+        <div class="appbar">
+          <div class="appbar-text">CW-001<span>Manage your service</span></div>
+          <img src="caterWorldBlack-ju8yNGfX_2.png" alt="Caterworld" class="logo-appbar">
+        </div>
+        <div class="screen">
+          <div class="status-banner">
+            <h3>Preparing Meal</h3>
+            <p>Status updated 15 mins ago</p>
+          </div>
+
+          <div class="card">
+            <h3>Sample Kitchen A</h3>
+            <p>Lunch · 12:30 · 100 pax</p>
+            <p>Tower A, 3rd floor, 12 OMR Road</p>
+          </div>
+          
+          <label class="field">Scheduled service date</label>
+          <div class="input-dummy" style="margin-bottom: 20px;">Oct 15 ▾</div>
+          
+          <div class="timeline">
+            <p class="done">Order confirmed</p>
+            <p class="done">Preparing meal</p>
+            <p>Dispatched</p>
+            <p>Service completed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- EMBEDDED GOOGLE FORM FOR DATA COLLECTION       -->
+<!-- ============================================== -->
+<div class="form-container">
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe2vnPqKDg2kpUK3PWav3QWk7bgLMNiUrqcnfgRBiyLdHlU-A/viewform?embedded=true" width="100%" height="1262" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+</div>
+
+<script>
+function switchTest(id) {
+  // Update Tab Styling
+  document.querySelectorAll('.tab').forEach((tab, index) => {
+      tab.classList.toggle('active', index + 1 === id);
+  });
+  
+  // Update Displayed Content
+  document.querySelectorAll('.test-container').forEach(c => c.classList.remove('active'));
+  document.getElementById('test' + id).classList.add('active');
+}
+
+function toggle(id){
+    document.getElementById(id).classList.toggle('hidden');
+}
+
+function pick(action){
+    alert('Interaction recorded: ' + action + '. Please scroll down to fill out the feedback form.');
+}
+</script>
+</body>
+</html>
