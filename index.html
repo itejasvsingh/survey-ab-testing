@@ -8,22 +8,22 @@
 :root{--brand:#660066;--accent:#9a038b;--ink:#251c2d;--muted:#706777;--line:#e9e2ed;--surface:#faf8fc;--bg:#eeebf2}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding-bottom: 50px;}
-header{max-width:1000px;margin:0 auto;padding:28px 20px 16px; text-align: center;}
-header h1{font-size:24px;margin:0 0 6px;letter-spacing:-.4px; color: var(--brand);}
-header p{color:var(--muted);font-size:14px;line-height:1.55;margin:6px 0}
+header{max-width:1000px;margin:0 auto;padding:24px 16px 12px; text-align: center;}
+header h1{font-size:22px;margin:0 0 6px;letter-spacing:-.4px; color: var(--brand);}
+header p{color:var(--muted);font-size:13.5px;line-height:1.55;margin:6px 0}
 
-.test-container{display: block; padding-bottom: 50px; border-bottom: 3px dashed #d9b8d9; margin-bottom: 40px;}
-.test-header {text-align: center; color: var(--brand); font-size: 22px; margin-bottom: 10px;}
+.test-container{display: block; padding-bottom: 40px; border-bottom: 3px dashed #d9b8d9; margin-bottom: 30px;}
+.test-header {text-align: center; color: var(--brand); font-size: 20px; margin-bottom: 10px;}
 
-.task{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:16px auto;max-width:1000px; font-size: 14.5px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
+.task{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:16px auto;max-width:1000px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
 .task b{color:var(--brand)}
-.wrap{max-width:1000px;margin:0 auto;padding:10px 20px 0;display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
-.col{width:320px}
-.label{text-align:center;font-weight:800;font-size:13px;letter-spacing:1.2px;color:var(--brand);margin-bottom:10px;text-transform:uppercase}
-.phone{width:320px;height:600px;border:8px solid #201c25;border-radius:34px;background:var(--surface);box-shadow:0 18px 40px #28113826;display:flex;flex-direction:column;overflow:hidden; position: relative;}
+.wrap{max-width:1000px;margin:0 auto;padding:10px 16px 0;display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.col{width:320px; max-width: 100%;}
+.label{text-align:center;font-weight:800;font-size:12.5px;letter-spacing:1.2px;color:var(--brand);margin-bottom:8px;text-transform:uppercase}
+.phone{width:320px;max-width:100%;height:600px;border:8px solid #201c25;border-radius:34px;background:var(--surface);box-shadow:0 18px 40px #28113826;display:flex;flex-direction:column;overflow:hidden; position: relative; margin: 0 auto;}
 .appbar{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:800;font-size:15px;background:#fff;flex-shrink:0; display:flex; justify-content: space-between; align-items: center;}
 .appbar-text span{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
-.logo-appbar{height:20px;max-width:100px;object-fit:contain;}
+.logo-appbar{height:20px;max-width:90px;object-fit:contain;}
 .screen{flex:1;overflow:auto;padding:14px 14px 20px; scrollbar-width: none;}
 .screen::-webkit-scrollbar { display: none; }
 
@@ -73,28 +73,29 @@ details p{white-space:pre-line;font-size:12px;margin:8px 0 2px}
 .status-banner p {margin: 0; font-size: 12px; color: #f5e8f5;}
 
 /* Feedback Form Inline UI */
-.feedback-inline { background:#fff; border:1px solid var(--line); border-radius:14px; max-width:800px; margin: 40px auto 0; padding:26px 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
-.feedback-inline h3 { margin: 0 0 16px; font-size: 18px; color: var(--brand); border-bottom: 2px solid var(--surface); padding-bottom: 12px;}
-fieldset{border:0;padding:0;margin:0 0 24px}
-legend{font-size:14px;font-weight:700;margin-bottom:10px;padding:0; width: 100%;}
-.opt{display:flex;gap:10px;margin:8px 0;font-size:14px; align-items: center;}
+.feedback-inline { background:#fff; border:1px solid var(--line); border-radius:14px; max-width:800px; margin: 30px auto 0; padding:20px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
+.feedback-inline h3 { margin: 0 0 14px; font-size: 17px; color: var(--brand); border-bottom: 2px solid var(--surface); padding-bottom: 10px;}
+fieldset{border:0;padding:0;margin:0 0 20px}
+legend{font-size:13.5px;font-weight:700;margin-bottom:8px;padding:0; width: 100%;}
+.opt{display:flex;gap:10px;margin:8px 0;font-size:13.5px; align-items: center;}
 .opt label{cursor:pointer; flex: 1;}
 .opt input[type="radio"] { accent-color: var(--brand); transform: scale(1.2); }
-input[type=text]{width:100%;border:1px solid #ded5e4;border-radius:10px;padding:12px;font:inherit;font-size:14px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+input[type=text]{width:100%;border:1px solid #ded5e4;border-radius:10px;padding:12px;font:inherit;font-size:13.5px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
 input[type=text]:focus { outline: 2px solid var(--brand); border-color: transparent; }
 
 /* Clickable Tags Grid */
-.tags-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px; }
+.tags-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px; }
+@media (min-width: 600px) { .tags-grid { grid-template-columns: 1fr 1fr; } }
 .tag-btn { background: #fff; border: 1px solid #ded5e4; border-radius: 8px; padding: 10px 12px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; text-align: left; transition: all 0.2s; }
 .tag-btn:hover { border-color: var(--brand); color: var(--brand); }
 .tag-btn.sel { background: #f5e8f5; border-color: var(--brand); color: var(--brand); box-shadow: 0 2px 6px rgba(102,0,102,0.15); }
 
-.scale{display:flex;gap:8px;margin-top:6px}
-.scale button{flex:1;border:1px solid #ded5e4;background:#fff;border-radius:8px;padding:10px 0;cursor:pointer;font-size:14px; font-weight: 700; color: var(--muted); transition: all 0.2s;}
+.scale{display:flex;gap:6px;margin-top:4px}
+.scale button{flex:1;border:1px solid #ded5e4;background:#fff;border-radius:8px;padding:10px 0;cursor:pointer;font-size:13.5px; font-weight: 700; color: var(--muted); transition: all 0.2s;}
 .scale button:hover { border-color: var(--brand); color: var(--brand); }
 .scale button.sel{background:var(--brand);color:#fff;border-color:var(--brand); box-shadow: 0 4px 10px rgba(102,0,102,0.3);}
-.submitrow{display:flex;flex-direction: column;gap:10px;align-items:center; margin-top: 30px;}
-#status{font-size:14px;font-weight:600; text-align: center;}
+.submitrow{display:flex;flex-direction: column;gap:10px;align-items:center; margin-top: 24px;}
+#status{font-size:13.5px;font-weight:600; text-align: center; padding: 0 10px;}
 </style>
 </head>
 <body>
@@ -213,14 +214,14 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
         <input type="hidden" id="score1_2" required>
       </fieldset>
       <fieldset style="margin-bottom: 0;">
-        <legend>4. What drove your choice? (Select main reason)</legend>
+        <legend>4. What drove your choice? (Select one or type custom reason)</legend>
         <div class="tags-grid" id="tags1">
           <button type="button" class="tag-btn" onclick="setTag(1, 'Faster price comparison')">⚡ Faster price comparison</button>
           <button type="button" class="tag-btn" onclick="setTag(1, 'Easier to review menus')">📋 Easier to review menus</button>
           <button type="button" class="tag-btn" onclick="setTag(1, 'Cleaner layout & less clutter')">✨ Cleaner layout & less clutter</button>
           <button type="button" class="tag-btn" onclick="setTag(1, 'Better decision confidence')">🎯 Better decision confidence</button>
         </div>
-        <input type="hidden" id="reason1" required>
+        <input type="text" id="custom1" placeholder="Or type something else..." style="margin-top: 10px;" oninput="setCustomTag(1, this.value)">
       </fieldset>
     </div>
   </div>
@@ -355,14 +356,14 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
         <input type="hidden" id="score2_2" required>
       </fieldset>
       <fieldset style="margin-bottom: 0;">
-        <legend>4. What drove your choice? (Select main reason)</legend>
+        <legend>4. What drove your choice? (Select one or type custom reason)</legend>
         <div class="tags-grid" id="tags2">
           <button type="button" class="tag-btn" onclick="setTag(2, 'Less cognitive overload')">🧩 Less cognitive overload</button>
           <button type="button" class="tag-btn" onclick="setTag(2, 'Better section grouping')">📁 Better section grouping</button>
           <button type="button" class="tag-btn" onclick="setTag(2, 'Easier to scan fields')">👀 Easier to scan fields</button>
           <button type="button" class="tag-btn" onclick="setTag(2, 'Feels less like a wall of text')">🧱 Feels less like a wall of text</button>
         </div>
-        <input type="hidden" id="reason2" required>
+        <input type="text" id="custom2" placeholder="Or type something else..." style="margin-top: 10px;" oninput="setCustomTag(2, this.value)">
       </fieldset>
     </div>
   </div>
@@ -470,14 +471,14 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
         <input type="hidden" id="score3_2" required>
       </fieldset>
       <fieldset style="margin-bottom: 0;">
-        <legend>4. What drove your choice? (Select main reason)</legend>
+        <legend>4. What drove your choice? (Select one or type custom reason)</legend>
         <div class="tags-grid" id="tags3">
           <button type="button" class="tag-btn" onclick="setTag(3, 'Status banner catches eye instantly')">🚨 Status banner catches eye instantly</button>
           <button type="button" class="tag-btn" onclick="setTag(3, 'Clear timeline progression')">📈 Clear timeline progression</button>
           <button type="button" class="tag-btn" onclick="setTag(3, 'Less scrolling to find status')">🔍 Less scrolling to find status</button>
           <button type="button" class="tag-btn" onclick="setTag(3, 'Better visual hierarchy')">🎨 Better visual hierarchy</button>
         </div>
-        <input type="hidden" id="reason3" required>
+        <input type="text" id="custom3" placeholder="Or type something else..." style="margin-top: 10px;" oninput="setCustomTag(3, this.value)">
       </fieldset>
     </div>
   </div>
@@ -516,6 +517,9 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  // Hidden storage variables for the chosen reasons
+  window.selectedReasons = { 1: '', 2: '', 3: '' };
+
   window.toggle = function(id) {
       document.getElementById(id).classList.toggle('hidden');
   };
@@ -533,18 +537,24 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
   };
 
   window.setTag = function(testNum, tagText) {
-    document.getElementById('reason' + testNum).value = tagText;
+    window.selectedReasons[testNum] = tagText;
+    document.getElementById('custom' + testNum).value = ''; // clear text input if chip selected
     const tagButtons = document.querySelectorAll('#tags' + testNum + ' .tag-btn');
     tagButtons.forEach(b => {
         b.classList.toggle('sel', b.textContent.includes(tagText));
     });
   };
 
+  window.setCustomTag = function(testNum, customText) {
+    window.selectedReasons[testNum] = customText.trim();
+    const tagButtons = document.querySelectorAll('#tags' + testNum + ' .tag-btn');
+    tagButtons.forEach(b => b.classList.remove('sel')); // deselect chips if typing custom text
+  };
+
   document.getElementById('fbform').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const scores = ['1_1', '1_2', '2_1', '2_2', '3_1', '3_2'];
-    const reasons = ['reason1', 'reason2', 'reason3'];
     const statusDiv = document.getElementById('status');
     const submitBtn = document.getElementById('submitBtn');
 
@@ -556,9 +566,9 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
         }
     }
 
-    for (let id of reasons) {
-        if (!document.getElementById(id).value) {
-            statusDiv.textContent = 'Please select a main reason chip for each test before submitting.';
+    for (let i = 1; i <= 3; i++) {
+        if (!window.selectedReasons[i]) {
+            statusDiv.textContent = `Please select a reason chip or type a custom answer for Test ${i} before submitting.`;
             statusDiv.style.color = '#a02b2b';
             return;
         }
@@ -573,19 +583,19 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
             preference: document.querySelector('input[name="t1_pref"]:checked').value,
             confidenceScore: parseInt(document.getElementById('score1_1').value),
             layoutScore: parseInt(document.getElementById('score1_2').value),
-            mainReason: document.getElementById('reason1').value
+            mainReason: window.selectedReasons[1]
         },
         test2_CreateOrder: {
             preference: document.querySelector('input[name="t2_pref"]:checked').value,
             organizationScore: parseInt(document.getElementById('score2_1').value),
             navigationScore: parseInt(document.getElementById('score2_2').value),
-            mainReason: document.getElementById('reason2').value
+            mainReason: window.selectedReasons[2]
         },
         test3_OrderTracking: {
             preference: document.querySelector('input[name="t3_pref"]:checked').value,
             effectivenessScore: parseInt(document.getElementById('score3_1').value),
             identificationSpeedScore: parseInt(document.getElementById('score3_2').value),
-            mainReason: document.getElementById('reason3').value
+            mainReason: window.selectedReasons[3]
         },
         participantName: document.getElementById('name').value.trim() || 'Anonymous',
         timestamp: serverTimestamp()
@@ -603,6 +613,7 @@ input[type=text]:focus { outline: 2px solid var(--brand); border-color: transpar
           document.querySelectorAll('#scale' + id + ' button').forEach(b => b.classList.remove('sel'));
       });
       document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('sel'));
+      window.selectedReasons = { 1: '', 2: '', 3: '' };
     } catch(err) {
       console.error("Error adding document: ", err);
       statusDiv.style.color = '#a02b2b';
